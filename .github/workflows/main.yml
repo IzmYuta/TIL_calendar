@@ -16,7 +16,7 @@ jobs:
           path: TIL
           token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
       - name: copy *.md
-        run: cp -r TIL/TILs/* _posts
+        run: cp TIL/TILs/*/. _posts/
       - name: clean TIL
         run: rm -rf TIL
       - name: create PR
