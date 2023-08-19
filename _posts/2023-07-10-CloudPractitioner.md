@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "CloudPractitioner"
-date: 2023-05-10
+date: 2023-07-10
 category: code
 excerpt: ""
 ---
