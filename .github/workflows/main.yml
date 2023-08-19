@@ -53,4 +53,4 @@ jobs:
       - name: branch-cleanup
         uses: jessfraz/branch-cleanup-action@master
         env:
-          GITHUB_TOKEN: ${{ ssecrets.TIL_GITHUB_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
