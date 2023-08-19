@@ -1,4 +1,4 @@
-# TIL_pages
+# TIL_calendar
 
 ## 概要
 ページ：https://izmyuta.github.io/TIL_pages/
