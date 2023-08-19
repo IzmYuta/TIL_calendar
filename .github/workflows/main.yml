@@ -14,7 +14,7 @@ jobs:
         with:
           repository: IzmYuta/TIL
           path: TIL
-          token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
       - name: copy *.md
         run: cp -r TIL/TILs/* _posts
       - name: clean TIL
@@ -22,7 +22,7 @@ jobs:
       - name: create PR
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           commit-message: 'copy *.md'
           branch: copy_target
