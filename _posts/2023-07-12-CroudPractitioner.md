@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "CroudPractitioner"
-date: 2023-05-12
+date: 2023-07-12
 category: code
 excerpt: ""
 ---
