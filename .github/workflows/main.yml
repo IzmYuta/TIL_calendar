@@ -16,7 +16,7 @@ jobs:
           path: TIL
           token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
       - name: add fileinfo
-        run: find TIL/TILs/*/. -type f -name "*.md" | xargs sed -i '1r TIL/format.txt'
+        run: find TIL/TILs/*/. -type f -name "*.md" | xargs sed -i '1e echo TIL/format.txt'
       - name: copy *.md
         run: cp -r TIL/TILs/*/. _posts/
       - name: clean TIL
