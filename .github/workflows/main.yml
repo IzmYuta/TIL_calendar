@@ -18,7 +18,7 @@ jobs:
       - name: add fileinfo
         run: |
           find TIL/TILs/*/. -type f -name "*.md" | while read -r md_file; do
-            dir_name=$(dirname "$md_file" | rev | cut -d'/' -f2- | rev)
+            category=$(echo "$md_file" | awk -F'/TILs/' '{print $2}' | cut -d'/' -f1)
             filename=$(basename "$md_file")
             title=$(echo "$filename" | cut -d'-' -f4- | sed 's/\.md$//')
             date=$(echo "$filename" | cut -d'-' -f1-3)
@@ -26,7 +26,7 @@ jobs:
             echo "layout: post" >> tmp_file
             echo "title: \"$title\"" >> tmp_file
             echo "date: $date" >> tmp_file
-            echo "category: $dir_name" >> tmp_file
+            echo "category: $category" >> tmp_file
             echo "excerpt: \"\"" >> tmp_file
             echo "---" >> tmp_file
             cat "$md_file" >> tmp_file
