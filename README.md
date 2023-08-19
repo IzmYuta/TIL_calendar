@@ -1,6 +1,8 @@
 # TIL_pages
 
 ## 概要
+ページ：https://izmyuta.github.io/TIL_pages/
+
 TILをカレンダー表示するためのページ
 
 [ここ](https://github.com/IzmYuta/TIL)で書いたmdファイルがこのリポジトリの`_posts/`にコピーされて、GitHub pagesによって表示されるという仕組み
