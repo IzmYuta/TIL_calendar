@@ -19,13 +19,14 @@ jobs:
         run: cp -r TIL/TILs/*/. _posts/
       - name: clean TIL
         run: rm -rf TIL
-      # - name: create PR
-      #   uses: peter-evans/create-pull-request@v3
-      #   with:
-      #     token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
-      #     author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-      #     commit-message: 'copy *.md'
-      #     branch: copy_target
-      #     branch-suffix: timestamp
-      #     delete-branch: true
-      #     title: 'updated *.md'
+      - name: create PR
+        id: createPR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          commit-message: 'copy *.md'
+          branch: copy_target
+          branch-suffix: timestamp
+          delete-branch: true
+          title: 'updated *.md'
