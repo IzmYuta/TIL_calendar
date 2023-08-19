@@ -16,7 +16,21 @@ jobs:
           path: TIL
           token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
       - name: add fileinfo
-        run: find TIL/TILs/*/. -type f -name "*.md" | xargs sed -i '1e echo TIL/format.txt'
+        run: |
+          find TIL/TILs/*/. -type f -name "*.md" | while read -r md_file; do
+            filename=$(basename "$md_file")
+            title=$(echo "$filename" | cut -d'-' -f4- | sed 's/\.md$//')
+            date=$(echo "$filename" | cut -d'-' -f1-3)
+            echo "---" > tmp_file
+            echo "layout: post" >> tmp_file
+            echo "title: \"$title\"" >> tmp_file
+            echo "date: $date" >> tmp_file
+            echo "category: code" >> tmp_file
+            echo "excerpt: \"\"" >> tmp_file
+            echo "---" >> tmp_file
+            cat "$md_file" >> tmp_file
+            mv tmp_file "$md_file"
+          done
       - name: copy *.md
         run: cp -r TIL/TILs/*/. _posts/
       - name: clean TIL
