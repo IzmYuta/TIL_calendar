@@ -1,7 +1,7 @@
 # TIL_calendar
 
 ## 概要
-ページ：https://izmyuta.github.io/TIL_pages/
+ページ：https://izmyuta.github.io/TIL_calendar/
 
 TILをカレンダー表示するためのページ
 
