@@ -41,16 +41,12 @@ jobs:
         with:
           token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          commit-message: 'copy *.md'
+          commit-message: 'copy markdown files'
           branch: copy_target
           branch-suffix: timestamp
           delete-branch: true
-          title: 'updated *.md'
+          title: 'updated markdown files'
       - name: Enable auto-merge for Steward PRs
         env:
           GH_TOKEN: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
         run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-url }}
-      - name: branch-cleanup
-        uses: jessfraz/branch-cleanup-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
