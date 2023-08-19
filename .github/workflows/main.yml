@@ -18,7 +18,7 @@ jobs:
       - name: copy *.md
         run: cp -r TIL/TILs/*/. _posts/
       - name: add fileinfo
-        run: find /_posts/ -type f -name "*.md" | xargs sed '1i format.txt'
+        run: find TIL/TILs/*/. -type f -name "*.md" | xargs sed '1i TIL/format.txt'
       - name: clean TIL
         run: rm -rf TIL
       - name: create PR
