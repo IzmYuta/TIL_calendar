@@ -1,0 +1,31 @@
+name: copy *.md from TIL
+on:
+  repository_dispatch:
+    types: [target-updated]
+jobs:
+  copy-target:
+    name: copy *.md
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: clone TIL
+        uses: actions/checkout@v2
+        with:
+          repository: IzmYuta/TIL
+          path: TIL
+          token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+      - name: copy *.md
+        run: cp -r TIL/TILs/* _posts
+      - name: clean TIL
+        run: rm -rf TIL
+      - name: create PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          commit-message: 'copy *.md'
+          branch: copy_target
+          branch-suffix: timestamp
+          delete-branch: true
+          title: 'updated *.md'
