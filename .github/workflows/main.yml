@@ -15,10 +15,10 @@ jobs:
           repository: IzmYuta/TIL
           path: TIL
           token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
+      - name: add fileinfo
+        run: find TIL/TILs/*/. -type f -name "*.md" | xargs sed -i '1r TIL/format.txt'
       - name: copy *.md
         run: cp -r TIL/TILs/*/. _posts/
-      - name: add fileinfo
-        run: find TIL/TILs/*/. -type f -name "*.md" | xargs sed '1i TIL/format.txt'
       - name: clean TIL
         run: rm -rf TIL
       - name: create PR
