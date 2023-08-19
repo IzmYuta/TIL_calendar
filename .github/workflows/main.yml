@@ -50,4 +50,4 @@ jobs:
       - name: Enable auto-merge for Steward PRs
         env:
           GH_TOKEN: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
-        run: gh pr merge --merge --auto ${{ GITHUB_OUTPUT }}
+        run: gh pr merge --merge --auto ${{ steps.cpr.outputs.PULL_REQUEST_URL }}
