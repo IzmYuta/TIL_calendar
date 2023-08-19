@@ -17,6 +17,8 @@ jobs:
           token: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
       - name: copy *.md
         run: cp -r TIL/TILs/*/. _posts/
+      - name: add fileinfo
+        run: find /_posts/ -type f -name "*.md" | xargs sed '1i ---¥nlayout: post¥ntitle: "python"¥ndate: 2023-08-01¥n---'
       - name: clean TIL
         run: rm -rf TIL
       - name: create PR
@@ -30,7 +32,7 @@ jobs:
           branch-suffix: timestamp
           delete-branch: true
           title: 'updated *.md'
-      - name: Enable auto-merge for Steward PRs
-        env:
-          GH_TOKEN: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
-        run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-url }}
+      # - name: Enable auto-merge for Steward PRs
+      #   env:
+      #     GH_TOKEN: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
+      #   run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-url }}
