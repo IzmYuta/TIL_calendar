@@ -31,4 +31,6 @@ jobs:
           delete-branch: true
           title: 'updated *.md'
       - name: Enable auto-merge for Steward PRs
+        env:
+          GH_TOKEN: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
         run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-url }}
