@@ -47,7 +47,7 @@ jobs:
           branch-suffix: timestamp
           delete-branch: true
           title: 'updated markdown files'
-      # - name: Enable auto-merge for Steward PRs
-      #   env:
-      #     GH_TOKEN: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
-      #   run: gh pr merge --merge --auto ${{ steps.cpr.outputs.pull-request-url }}
+      - name: Enable auto-merge for Steward PRs
+        env:
+          GH_TOKEN: ${{ secrets.TIL_GITHUB_ACCESS_TOKEN }}
+        run: gh pr merge --merge --auto ${{ GITHUB_OUTPUT }}
