@@ -7,12 +7,19 @@ excerpt: ""
 ---
 # Singleton
 ## 概要
-- シングルトン(クラス)とは、プログラム中にそのクラスのインスタンスが1つしか存在しないという、デザインパターンの1つ
+- シングルトン(クラス)とは、システム中にそのクラスのインスタンスが1つしか存在しないという、デザインパターンの1つ
+- 最初の1つ目のインスタンスをシステム全体で使い回す
 - シングルトンはステートレスなオブジェクトであるべき
   - ステートレス：状態を持たない。すなわち過去のデータが未来に影響を与えない。ユーザーによって挙動を変えない。
+- 利用例：設定ファイル、ログファイル
+- 類：シングルインスタンス
 
+## 特徴
+- 指定したクラスのインスタンスが1つしか存在しないことを保証することができる
+- インスタンスが1つしかないので、マルチスレッド下では同時編集など注意しなければならない
 
-## 実装方法
+## 実装方法(Django)
+厳密にはシングルトンではないが...
 ```python
 class SingletonModel(models.Model):
     # Singleton Django Model
@@ -24,7 +31,7 @@ class SingletonModel(models.Model):
         # Save object to the database. Removes all other entries if there are any.
 
         self.__class__.objects.exclude(id=self.id).delete()
-        super(SingletonModel, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 ```
 参考：https://stackoverflow.com/questions/49735906/how-to-implement-singleton-in-django
 
