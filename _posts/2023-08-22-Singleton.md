@@ -15,16 +15,16 @@ excerpt: ""
 ## 実装方法
 ```python
 class SingletonModel(models.Model):
-    """Singleton Django Model"""
+    # Singleton Django Model
 
     class Meta:
         abstract = True
 
     def save(self, *args, **kwargs):
-        """
-        Save object to the database. Removes all other entries if there
-        are any.
-        """
+        # Save object to the database. Removes all other entries if there are any.
+
         self.__class__.objects.exclude(id=self.id).delete()
         super(SingletonModel, self).save(*args, **kwargs)
 ```
+参考：https://stackoverflow.com/questions/49735906/how-to-implement-singleton-in-django
+
