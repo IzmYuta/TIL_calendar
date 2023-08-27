@@ -20,6 +20,7 @@ excerpt: ""
 - Direct ConnectはAWSとオンプレミスとを**継続して**接続する場合に最適
 - スポットインスタンスを利用していても、SQSキューを利用してリクエストを中継していれば、インスタンスが突然中断された場合でもデータが消失せずに、別のEC2インスタンスで継続してアプリケーションを実行できる
 - S3 Glacier Flexible Retrivalの最低保持期間は９０日
+- DynamoDBはオンデマンドにすることで、負荷に応じて自動でスケーリングしてくれる。Auto Scalingは不要。
 
 
 ## Amazon EventBridge（CloudWatch Events）
