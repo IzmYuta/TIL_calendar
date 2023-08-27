@@ -22,6 +22,7 @@ excerpt: ""
 - ビッグデータなど大容量のデータ分析に使うDB -> Redshift
 - プロビジョニング：予測して
 - オンデマンド:要求に応じて
+- DynamoDBにキャッシュレイヤーを追加したい場合は、　DynamoDB Accelrator(DAX)を追加することで実現できる
 
 
 ## AWS Auto Scaling
