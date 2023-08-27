@@ -19,6 +19,7 @@ excerpt: ""
 - AWS Storage Gatewayには最大料金（125USD/ゲートウェイ）が設定されている
 - Direct ConnectはAWSとオンプレミスとを**継続して**接続する場合に最適
 - スポットインスタンスを利用していても、SQSキューを利用してリクエストを中継していれば、インスタンスが突然中断された場合でもデータが消失せずに、別のEC2インスタンスで継続してアプリケーションを実行できる
+- S3 Glacier Flexible Retrivalの最低保持期間は９０日
 
 
 ## Amazon EventBridge（CloudWatch Events）
