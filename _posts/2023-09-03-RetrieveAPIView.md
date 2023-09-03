@@ -65,3 +65,12 @@ self.get_objectでは何をしているのかを、GenericAPIViewを見る。
   - モデルオブジェクトが返却される
 - 取得したモデルオブジェクトインスタンスをJSONオブジェクトに(デ)シリアライズする
 - レスポンスとしてJSONオブジェクトを返す
+
+## 補足：lookup_field と lookup_url_kwargの違い
+- `self.lookup_field`：オブジェクトをクエリするときにどのモデルフィールドが使用されるかを定義します。
+- `self.lookup_url_kwarg`：ビューの初期化された kwarg から取得する URL kwarg を定義します。
+
+つまり、スキーマ上でのパスパラメータでわかりやすい名前を定義したが、Djangoのモデル定義上では違う名前で定義されている場合に
+- `self.lookup_field`モデル上での定義名
+- `self.lookup_url_kwarg`スキーマ上での定義名
+というように使うのが良い。
