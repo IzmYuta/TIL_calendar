@@ -73,4 +73,5 @@ self.get_objectでは何をしているのかを、GenericAPIViewを見る。
 つまり、スキーマ上でのパスパラメータでわかりやすい名前を定義したが、Djangoのモデル定義上では違う名前で定義されている場合に
 - `self.lookup_field`モデル上での定義名
 - `self.lookup_url_kwarg`スキーマ上での定義名
+
 というように使うのが良い。
