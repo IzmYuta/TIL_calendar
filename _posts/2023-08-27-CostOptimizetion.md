@@ -69,8 +69,7 @@ excerpt: ""
 | インターネットからAWS（インバウンド通信） | - | 無料 | ・ELB、Global Acceleratorなどを利用する場合は、別途利用料が必要 |
 | AWSからインターネット（アウトバウンド通信） | - | 0.114USD/GB（最初の10TB/月まで） | • 100GB/月まで無料<br>• インターネットゲートウェイの利用料は無料 |
 | NATゲートウェイ | 0.062USD/時間 | 0.062USD/GB |  |
-| CloudFront | 10.009USD/1万リクエスト
-（HTTP通信） | 0.114USD/GB（最初の10TB/月まで） | • 1TB/月まで無料<br>• オリジンサーバーからCloudFrontへの転送は無料 |
+| CloudFront | 10.009USD/1万リクエスト（HTTP通信） | 0.114USD/GB（最初の10TB/月まで） | • 1TB/月まで無料<br>• オリジンサーバーからCloudFrontへの転送は無料 |
 | VPCピアリング | 無料 | 0.01USD/GB | • 双方のVPCに料金が発生<br>• 同一AZ内は無料 |
 | Direct Connect | （契約によって異なる） | 0.041USD/GB | ・インバウンド通信は無料 |
 | Snowball | 30USD/日✕デバイス数 | 無料 | ・Snowball Edge Storage Optimizedの料金 |
