@@ -3,11 +3,16 @@ layout: default
 title: "投稿一覧"
 ---
 
-# タブ切り替え
+# 投稿一覧
 
 <div class="tab">
+  <p class="tabtext">タグ一覧</p>
   <button class="tablinks" onclick="filterCategory('all')">すべて</button>
+  <button class="tablinks" onclick="filterCategory('AWS')">AWS</button>
+  <button class="tablinks" onclick="filterCategory('DRF')">DRF</button>
+  <button class="tablinks" onclick="filterCategory('Git')">Git</button>
   <button class="tablinks" onclick="filterCategory('Go')">Go</button>
+  <button class="tablinks" onclick="filterCategory('思想')">思想</button>
   <!-- 他のカテゴリのボタンも追加 -->
 </div>
 
