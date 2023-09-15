@@ -3,7 +3,7 @@ layout: default
 title: "投稿一覧"
 ---
 
-
+# タブ切り替え
 
 <div class="tab">
   <button class="tablinks" onclick="filterCategory('all')">すべて</button>
@@ -13,25 +13,22 @@ title: "投稿一覧"
 
 <div id="posts">
   {% for post in site.posts %}
-    <div class="post" data-category="{{ post.category }}" data-content="{{ post.content | markdownify }}">
+    <div class="post" data-category="{{ post.category }}">
+      - [{{ post.date | date : "%F" }}  {{ post.title }}]({{site.url}}{{site.baseurl}}{{post.url}}) 
     </div>
   {% endfor %}
 </div>
 
 <!-- JavaScriptでカテゴリ別にフィルタリングするコード -->
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
   function filterCategory(category) {
     var posts = document.querySelectorAll(".post");
     posts.forEach(function(post) {
       var postCategory = post.getAttribute("data-category");
-      var content = post.getAttribute("data-content");
-      var renderedContent = marked(content);
-
       if (category === "all" || postCategory === category) {
-        post.innerHTML = renderedContent;
+        post.style.display = "block";
       } else {
-        post.innerHTML = ""; // 非表示
+        post.style.display = "none";
       }
     });
   }
