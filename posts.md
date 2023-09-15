@@ -6,6 +6,13 @@ title: "投稿一覧"
 # 投稿一覧
 
 <style>
+.tabtext {
+  font-size: 16px;
+  margin: 0;
+  padding: 5px 0;
+  text-align: center;
+  color: #333;
+}
 /* ボタンの基本スタイル */
 .tablinks {
   background-color: #f2f2f2;
@@ -48,9 +55,9 @@ title: "投稿一覧"
 <!-- JavaScriptでカテゴリ別にフィルタリングするコード -->
 <script>
   function filterCategory(category) {
-    var posts = document.querySelectorAll(".post");
+    const posts = document.querySelectorAll(".post");
     posts.forEach(function(post) {
-      var postCategory = post.getAttribute("data-category");
+      const postCategory = post.getAttribute("data-category");
       if (category === "all" || postCategory === category) {
         post.style.display = "block";
       } else {
@@ -58,4 +65,15 @@ title: "投稿一覧"
       }
     });
   }
+  const buttons = document.querySelectorAll(".tablinks");
+  buttons.forEach(function(button) {
+    button.addEventListener("click", function() {
+      // すべてのボタンからactiveクラスを削除
+      buttons.forEach(function(btn) {
+        btn.classList.remove("active");
+      });
+      // クリックしたボタンにactiveクラスを追加
+      button.classList.add("active");
+    });
+  });
 </script>
