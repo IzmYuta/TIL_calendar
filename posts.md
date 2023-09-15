@@ -6,7 +6,7 @@ title: "投稿一覧"
 # 投稿一覧
 
 <div class="tab">
-  <p class="tabtext">タグ一覧</p>
+  <p class="tabtext">タグ</p>
   <button class="tablinks" onclick="filterCategory('all')">すべて</button>
   <button class="tablinks" onclick="filterCategory('AWS')">AWS</button>
   <button class="tablinks" onclick="filterCategory('DRF')">DRF</button>
