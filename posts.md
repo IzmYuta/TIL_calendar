@@ -3,17 +3,33 @@ layout: default
 title: "投稿一覧"
 ---
 
-#　投稿一覧
-
 
 <div class="tab">
-  <a href="{{ page.url }}#all" class="tablinks">すべて</a>
-  <a href="{{ page.url }}#go" class="tablinks">Go</a>
-  <!-- 他のカテゴリのリンクも追加 -->
+  <button class="tablinks" onclick="filterCategory('all')">すべて</button>
+  <button class="tablinks" onclick="filterCategory('Go')">Go</button>
+  <!-- 他のカテゴリのボタンも追加 -->
 </div>
 
-{% for post in site.posts %}
-  <div id="{{ post.category }}" class="post">
-    - [{{ post.date | date : "%F" }}  {{ post.title }}]({{site.url}}{{site.baseurl}}{{post.url}})
-  </div>
-{% endfor %}
+<div id="posts">
+  {% for post in site.posts %}
+    <div class="post" data-category="{{ post.category }}">
+      - [{{ post.date | date : "%F" }}  {{ post.title }}]({{ post.url | absolute_url }})
+    </div>
+  {% endfor %}
+</div>
+
+<!-- JavaScriptでカテゴリ別にフィルタリングするコード -->
+<script>
+  function filterCategory(category) {
+    var posts = document.querySelectorAll(".post");
+    posts.forEach(function(post) {
+      var postCategory = post.getAttribute("data-category");
+      if (category === "all" || postCategory === category) {
+        post.style.display = "block";
+      } else {
+        post.style.display = "none";
+      }
+    });
+  }
+</script>
+
