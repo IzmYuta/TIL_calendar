@@ -5,8 +5,26 @@ title: "投稿一覧"
 
 # 投稿一覧
 
+<style>
+/* ボタンの基本スタイル */
+.tablinks {
+  background-color: #f2f2f2;
+  border: none;
+  color: #333;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* 選択中のボタンのスタイル */
+.tablinks.active {
+  background-color: #007bff;
+  color: #fff;
+}
+</style>
+
 <div class="tab">
-  <a class="tabtext">タグ</a>
+  <p class="tabtext">タグ</p>
   <button class="tablinks" onclick="filterCategory('all')">すべて</button>
   <button class="tablinks" onclick="filterCategory('AWS')">AWS</button>
   <button class="tablinks" onclick="filterCategory('DRF')">DRF</button>
