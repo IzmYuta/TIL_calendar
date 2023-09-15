@@ -9,8 +9,7 @@ title: "投稿一覧"
 .tabtext {
   font-size: 16px;
   margin: 0;
-  padding: 5px 0;
-  text-align: center;
+  padding:　0;
   color: #333;
 }
 /* ボタンの基本スタイル */
