@@ -14,7 +14,7 @@ title: "投稿一覧"
 <div id="posts">
   {% for post in site.posts %}
     <div class="post" data-category="{{ post.category }}">
-      - [{{ post.date | date : "%F" }}  {{ post.title }}]({{site.url}}{{site.baseurl}}{{post.url}}) 
+      - [{{ post.date | date : "%F" }}  {{ post.title }}]({{ post.url | absolute_url }})
     </div>
   {% endfor %}
 </div>
