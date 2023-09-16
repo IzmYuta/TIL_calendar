@@ -29,6 +29,7 @@ title: "投稿一覧"
   <button class="tablinks" onclick="filterCategory('DRF')">DRF</button>
   <button class="tablinks" onclick="filterCategory('git')">git</button>
   <button class="tablinks" onclick="filterCategory('Go')">Go</button>
+  <button class="tablinks" onclick="filterCategory('ISUCON')">ISUCON</button>
   <button class="tablinks" onclick="filterCategory('思想')">思想</button>
   <!-- 他のカテゴリのボタンも追加 -->
 </div>
