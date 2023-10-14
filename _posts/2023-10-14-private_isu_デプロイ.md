@@ -32,12 +32,13 @@ excerpt: ""
 - 参考：https://github.com/gfx/isucon7-qualify/blob/master/restart.sh
 ```bash
 #!/bin/bash
+# nodejs実装でのスクリプト
 set -e
 cd /home/isucon/isubata/webapp
 git pull
 sudo /usr/sbin/nginx -t
 sudo service nginx reload
-# sudo service isubata.nodejs restart
+sudo service isubata.nodejs restart
 ```
 
 ### ロールバック方法
