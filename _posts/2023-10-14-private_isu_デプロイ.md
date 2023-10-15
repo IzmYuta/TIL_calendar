@@ -44,16 +44,6 @@ sudo service isubata.nodejs restart
 ### ロールバック方法
 - 調査中
 
-
-### その他
-- マシンの起動
-  - ISUCON用のAMIを選択して起動
-  - リージョンが東京(ap-northeast-1)になっているか確認
-    <img width="1470" alt="5A123D85-D29B-41EF-BAAB-C4EF52FB4031" src="https://github.com/IzmYuta/TIL/assets/104307371/d71ed80f-ddb6-47c4-8795-eab3b9a347a5">
-- 動作確認
-  - セキュリティグループを編集してHTTP(80)のポートを許可するように編集
-  - グローバルIPアドレスをブラウザに入力してアクセス
-
 ## 参考になりそうなページ
 - http://tatamo.81.la/blog/2018/09/16/isucon8-qual-2/
 - https://speakerdeck.com/rosylilly/isucon12-shi-qian-jiang-xi
