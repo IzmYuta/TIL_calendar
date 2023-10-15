@@ -38,5 +38,5 @@ private-isuのリンク：https://github.com/catatsuy/private-isu
 <img width="1470" alt="8683C56D-65AA-4862-9FB3-6B39C37D836A" src="https://github.com/IzmYuta/TIL/assets/104307371/56b13735-b98b-4906-bd29-a97614372dce">
 <img width="1470" alt="9DEC05CC-C605-4E0C-9FB7-3682DEFB852A" src="https://github.com/IzmYuta/TIL/assets/104307371/70a214c9-5a9d-4617-9bac-b3e3613c2aa7">
 
-- グローバルIPアドレスからアクセス(重すぎて開かない可能性あり)
+- グローバルIPアドレスをブラウザにコピーしてアクセス(httpで)
 ![ADC36BD3-6C14-4376-A753-58188BC96CE7_1_201_a](https://github.com/IzmYuta/TIL/assets/104307371/367c4a85-a1bf-4b96-9113-1ec70b21b9be)
