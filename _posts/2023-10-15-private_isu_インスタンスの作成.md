@@ -40,3 +40,4 @@ private-isuのリンク：https://github.com/catatsuy/private-isu
 
 - グローバルIPアドレスをブラウザにコピーしてアクセス(httpで)
 ![ADC36BD3-6C14-4376-A753-58188BC96CE7_1_201_a](https://github.com/IzmYuta/TIL/assets/104307371/367c4a85-a1bf-4b96-9113-1ec70b21b9be)
+<img width="1470" alt="C544BB56-3876-4876-B4CB-FB2EED60671B" src="https://github.com/IzmYuta/TIL/assets/104307371/8586afd1-e38b-4953-bd34-b812ff318374">
