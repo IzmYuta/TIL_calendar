@@ -8,14 +8,12 @@ excerpt: ""
 # private-isu
 
 ## 2.計測
-### 手順
+### CPU・メモリ使用率
 1. ベンチマーカーを実行
 2. 実行中にlinuxコマンドを利用してモニタリングする
     - CPU使用率を計測：topコマンド
     - メモリ使用率：freeコマンド
 3. 使用率が高いところに対してアプローチ
-
-### 実際にやってみる(初期状態で実行)
 
 平常時：
 <img width="1470" alt="40B82BF4-BE4A-410A-ADDB-C9E1071886C9" src="https://github.com/IzmYuta/TIL/assets/104307371/3eab0f8e-49ef-443f-b4df-e605d765ce21">
@@ -28,3 +26,22 @@ excerpt: ""
 - ベンチマーク実行時にCPU利用率が大きく上がっていることがわかる
 - 一方でメモリ使用率は平常時とほとんど変わっていなかった
 - ->CPUリソースがボトルネックになっていると判断できる
+
+### スロークエリログの取得
+- `/etc/mysql/mysql.cnf.d/mysqld.cnf`(Dockerなら`webapp/mysql/conf.d/my.cnf`)の設定を変更することでスロークエリログの有効化ができる
+
+```
+[mysqld]
+slow_query_log      = 1
+slow_query_log_file = /var/log/mysql//mysql-slow.log
+long_query_time     = 0
+```
+
+| 設定 | 意味 |
+|---|---|
+| slow_query_log | スロークエリログを有効化する |
+| slow_query_log_file | スロークエリログの出力先 |
+| long_query_time | 指定秒数以上のクエリを出力 |
+
+### スロークエリログの解析
+- そのままだと膨大すぎるので、abコマンドで解析する
