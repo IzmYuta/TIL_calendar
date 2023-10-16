@@ -25,10 +25,12 @@ excerpt: ""
 
 - ベンチマーク実行時にCPU利用率が大きく上がっていることがわかる
 - 一方でメモリ使用率は平常時とほとんど変わっていなかった
-- ->CPUリソースがボトルネックになっていると判断できる
+- ->CPUリソースがボトルネックになっていると判断できる。
+- 特にMySQLのプロセスが高い使用率になっているので、DBに対してアプローチが必要だと判断できる。 
 
 ### スロークエリログの取得
 - `/etc/mysql/mysql.cnf.d/mysqld.cnf`(Dockerなら`webapp/mysql/conf.d/my.cnf`)の設定を変更することでスロークエリログの有効化ができる
+- 設定を反映させるためには`systemctl restart mysql`で再起動すること
 
 ```
 [mysqld]
@@ -43,5 +45,36 @@ long_query_time     = 0
 | slow_query_log_file | スロークエリログの出力先 |
 | long_query_time | 指定秒数以上のクエリを出力 |
 
-### スロークエリログの解析
-- そのままだと膨大すぎるので、abコマンドで解析する
+### スロークエリログの集計(簡易的に確認したい時)
+- そのままだと膨大すぎるので、mysqldumpslowコマンドで集計する
+- logファイルの閲覧ができるユーザーで実行すること(rootなど)
+- ソート機能を使ってクエリ時間順に並べたりもできる
+
+一例：
+```bash
+$ mysqldumpslow t /var/log/mysql/mysql-slow.log 
+Count: 924  Time=0.07s (61s)  Lock=0.00s (0s)  Rows=2.8 (2586), isuconp[isuconp]@localhost
+  SELECT * FROM `comments` WHERE `post_id` = N ORDER BY `created_at` DESC LIMIT N
+```
+- -aオプションでクエリログの詳細を見ることができる(ログが膨大なときは使わないほうがいいかも)
+- -sオプションでソート方法の指定ができる。ここではt(実行時間)でソートしている。
+- ` SELECT * FROM ~`が発行されたクエリ
+
+### スロークエリログの解析(こちらがメイン)
+- pt-query-digestを用いて解析する
+
+インストール(Debian/Ubuntu)：
+```bash
+sudo apt update
+sudo apt install percona-toolkit
+```
+
+インストール(Red Hat)：
+```bash
+sudo yum install https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+sudo yum install percona-toolkit
+```
+
+## 参考
+- ISUCON本
+- https://blog.bitjourney.com/entry/2017/11/09/101740
