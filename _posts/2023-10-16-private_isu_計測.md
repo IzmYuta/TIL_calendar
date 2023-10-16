@@ -62,6 +62,8 @@ Count: 924  Time=0.07s (61s)  Lock=0.00s (0s)  Rows=2.8 (2586), isuconp[isuconp]
 
 ### スロークエリログの解析(こちらがメイン)
 - pt-query-digestを用いて解析する
+- `pt-query-digest /var/log/mysql/mysql-slow.log`でログを解析できる
+- teeコマンドを使ってファイルに書き込むこともできる
 
 インストール(Debian/Ubuntu)：
 ```bash
@@ -73,6 +75,14 @@ sudo apt install percona-toolkit
 ```bash
 sudo yum install https://repo.percona.com/yum/percona-release-latest.noarch.rpm
 sudo yum install percona-toolkit
+```
+
+使用例：
+```bash
+# 標準出力させる場合
+pt-query-digest /var/log/mysql/mysql-slow.log
+# ファイル出力させるとき
+pt-query-digest /var/log/mysql/mysql-slow.log | tee /home/isucon/private_isu/digest_$(date +%Y%m%d%H%M).txt
 ```
 
 ## 参考
