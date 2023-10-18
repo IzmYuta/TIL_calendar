@@ -24,6 +24,14 @@ excerpt: ""
 - goroutineはコルーチン(coroutine)と似ている
   - コルーチンとの違い：goroutineは中断・再開の制御ができない。実行順の制御もできない。Go runtimeがスケジューリングしてやってくれる。
   - -> 制限が多い分、簡単に並行処理を扱うことができる
+  - `go func()`と宣言するだけで使うことができる
+
+
+```go
+go func() {
+  // 処理を記述
+}()
+```
 
 ### 1.1 goscheduler
 - P,M,Gの3つの要素がある
@@ -116,6 +124,9 @@ func main() {
   - こうなるのは、複数のgoroutineがどの時点の数字をインクリメントするのかは、タイミングによるためである
   - -> 結果が一定でない
   - Mutexを使うことでこのようなData Race(データ競合)に対して、排他的処理を行うことができる
+  - Mutexにはsync.Mutexとsync.RWMutexの2種類がある
+    - sync.Mutex：シンプルなロックを提供
+    - sync.RWMutex：共有ロックを提供
 
 ```go
 package main
