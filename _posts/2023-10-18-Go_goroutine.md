@@ -81,6 +81,9 @@ func main() {
   - 値渡しをするとコピーが作成されてしまう
   - 最初に定義したwgとは別のwgに対してデクリメントが行われてしまうのでDeadlockとなる
   - -> 関数にWaitGroupを渡すときはポインタで渡そう！
+- 原因特定にはgo vetなどのlinterを使うと便利
+
+<img width="1011" alt="スクリーンショット 2023-10-18 16 53 52" src="https://github.com/IzmYuta/TIL/assets/104307371/02db13c2-d3cd-48f9-b601-a77303029184">
 
 修正後：
 ```go
@@ -96,7 +99,7 @@ func main() {
 	for i := 0; i < 5; i++ {
 		i := i
 		wg.Add(1)
-    // ポインタを渡す
+                // ポインタを渡す
 		go func(wg *sync.WaitGroup) {
 			defer wg.Done()
 			log.Println(i)
@@ -107,3 +110,29 @@ func main() {
 }
 ```
 
+### 1.4 Mutex
+- 次のコードの実行結果は？
+  - 1000ではない
+  - こうなるのは、複数のgoroutineがどの時点の数字をインクリメントするのかは、タイミングによるためである
+  - -> 結果が一定でない
+  - Mutexを使うことでこのようなData Race(データ競合)に対して、排他的処理を行うことができる
+
+```go
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	c := 0
+	for i := 0; i < 1000; i++ {
+		go func() {
+			c++
+		}()
+	}
+	time.Sleep(time.Second)
+	fmt.Println(c)
+}
+```
