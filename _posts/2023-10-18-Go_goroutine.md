@@ -67,22 +67,22 @@ go func() {
 package main
 
 import (
-	"log"
-	"sync"
+  "log"
+  "sync"
 )
 
 func main() {
-	var wg sync.WaitGroup
-	for i := 0; i < 5; i++ {
-		i := i
-		wg.Add(1)
-		go func(wg sync.WaitGroup) {
-			defer wg.Done()
-			log.Println(i)
-		}(wg)
-	}
-	wg.Wait()
-	log.Println("end")
+  var wg sync.WaitGroup
+  for i := 0; i < 5; i++ {
+    i := i
+    wg.Add(1)
+    go func(wg sync.WaitGroup) {
+      defer wg.Done()
+      log.Println(i)
+    }(wg)
+  }
+  wg.Wait()
+  log.Println("end")
 }
 ```
 - `go func(wg sync.WaitGroup) {`に原因あり
@@ -98,23 +98,23 @@ func main() {
 package main
 
 import (
-	"log"
-	"sync"
+  "log"
+  "sync"
 )
 
 func main() {
-	var wg sync.WaitGroup
-	for i := 0; i < 5; i++ {
-		i := i
-		wg.Add(1)
-                // ポインタを渡す
-		go func(wg *sync.WaitGroup) {
-			defer wg.Done()
-			log.Println(i)
-		}(&wg) // ここも忘れずに
-	}
-	wg.Wait()
-	log.Println("end")
+  var wg sync.WaitGroup
+  for i := 0; i < 5; i++ {
+    i := i
+    wg.Add(1)
+    // ポインタを渡す
+    go func(wg *sync.WaitGroup) {
+      defer wg.Done()
+	log.Println(i)
+    }(&wg) // ここも忘れずに
+  }
+  wg.Wait()
+  log.Println("end")
 }
 ```
 
@@ -126,24 +126,60 @@ func main() {
   - Mutexを使うことでこのようなData Race(データ競合)に対して、排他的処理を行うことができる
   - Mutexにはsync.Mutexとsync.RWMutexの2種類がある
     - sync.Mutex：シンプルなロックを提供
-    - sync.RWMutex：共有ロックを提供
-
+    - sync.RWMutex：共有ロックを提供(White処理はロック解除まで待つが、Read処理は許可する)
+- プロダクトレベルでの使用：
+  - インメモリキャッシュ
+  - グローバルリソースへのアクセス
 ```go
 package main
 
 import (
-	"fmt"
-	"time"
+  "fmt"
+  "time"
 )
 
 func main() {
-	c := 0
-	for i := 0; i < 1000; i++ {
-		go func() {
-			c++
-		}()
-	}
-	time.Sleep(time.Second)
-	fmt.Println(c)
+  c := 0
+  for i := 0; i < 1000; i++ {
+    go func() {
+      c++
+    }()
+  }
+  time.Sleep(time.Second)
+  fmt.Println(c)
 }
 ```
+
+
+### 1.5 select
+- channelの受け取りを多重化できる
+- switchのように上から評価されず受け取れたものから処理する
+- どれにも該当しない場合はdefaultへ
+- defaultがない場合はブロックされる
+
+```go
+go func() {
+  ch1 <- 1
+}()
+go func() {
+  ch2 <- 2
+}()
+select {
+  case v1, ok := <-ch1:
+    //
+  case v2, ok := <-ch2:
+    //
+  default:
+}
+```
+
+### 1.6 semaphore
+- 制御なしでgoroutineを生成すると当然パフォーマンスは下がる
+- rate limitが存在すると制御しないといけない
+- gorutineの実行数を制御する:
+  - 
+
+nosemaphore：
+<img width="1011" alt="AD0B74EB-2C5B-4994-9DE2-75942DE99238" src="https://github.com/IzmYuta/TIL/assets/104307371/38f853e0-d32d-461f-ab94-a771e8555ad6">
+semaphore：
+<img width="1011" alt="88B04F73-57F2-4832-9AE6-CDD92A0B9921" src="https://github.com/IzmYuta/TIL/assets/104307371/c79cb59c-a013-48ab-a285-595a62c0c9e0">
