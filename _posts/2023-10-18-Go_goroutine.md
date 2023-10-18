@@ -33,3 +33,77 @@ excerpt: ""
   - 画像ではPの数を1として実行
     - Pが1つであっても、複数個のMの中で複数個のGが実行されているので、M:Nスレッドモデルで動いていることがわかる
 <img width="1011" alt="スクリーンショット 2023-10-18 14 15 16" src="https://github.com/IzmYuta/TIL/assets/104307371/e6200ff2-ef7e-400a-a313-c79cfc8b14bc">
+
+
+### 1.2 Go channel
+- Go channelとは並行に実行している関数同士が特定の方の値を送受信するためのもの
+- channel<- や <-channelという構文でデータのコミュニケーションをとる
+- 2回closeするとpanicを起こすので注意
+  - 呼び出し側でcloseするように心がけること
+<img width="1011" alt="BC435791-E470-4381-8188-7265CF9DB011" src="https://github.com/IzmYuta/TIL/assets/104307371/8e1ecf6f-891e-433d-be93-1935dca6acb9">
+
+
+- Deadlockには注意すること
+  - コンパイル時には判明せず、ランタイム実行しないとわからない
+
+<img width="1011" alt="AE13BFD0-B09F-4C3E-9C5D-677B5A028D79" src="https://github.com/IzmYuta/TIL/assets/104307371/28fb4475-88ba-4689-8482-05947cb76edc">
+
+### 1.3 WaitGroup
+- 全てのルーチンが終了するまで待機したい時に使う
+- Add: 終了待ちのgoroutineの数だけ内部のstateをインクリメントする
+- Done: 終了したgoroutineが呼び内部のstateをデクリメントする
+- Wait: 内部のstateが0になるまでブロックする
+
+失敗するコード：
+```go
+package main
+
+import (
+	"log"
+	"sync"
+)
+
+func main() {
+	var wg sync.WaitGroup
+	for i := 0; i < 5; i++ {
+		i := i
+		wg.Add(1)
+		go func(wg sync.WaitGroup) {
+			defer wg.Done()
+			log.Println(i)
+		}(wg)
+	}
+	wg.Wait()
+	log.Println("end")
+}
+```
+- `go func(wg sync.WaitGroup) {`に原因あり
+  - 値渡しをするとコピーが作成されてしまう
+  - 最初に定義したwgとは別のwgに対してデクリメントが行われてしまうのでDeadlockとなる
+  - -> 関数にWaitGroupを渡すときはポインタで渡そう！
+
+修正後：
+```go
+package main
+
+import (
+	"log"
+	"sync"
+)
+
+func main() {
+	var wg sync.WaitGroup
+	for i := 0; i < 5; i++ {
+		i := i
+		wg.Add(1)
+    // ポインタを渡す
+		go func(wg *sync.WaitGroup) {
+			defer wg.Done()
+			log.Println(i)
+		}(&wg) // ここも忘れずに
+	}
+	wg.Wait()
+	log.Println("end")
+}
+```
+
