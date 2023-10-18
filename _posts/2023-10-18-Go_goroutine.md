@@ -23,3 +23,13 @@ excerpt: ""
   - なのでGoを実行するときは必ずgoroutineを使っている
 - goroutineはコルーチン(coroutine)と似ている
   - コルーチンとの違い：goroutineは中断・再開の制御ができない。実行順の制御もできない。Go runtimeがスケジューリングしてやってくれる。
+  - -> 制限が多い分、簡単に並行処理を扱うことができる
+
+### 1.1 goscheduler
+- P,M,Gの3つの要素がある
+  - P：CPUのコアのようなもの
+  - M：goroutineを実行する場所
+  - G：goroutine
+  - 画像ではPの数を1として実行
+    - Pが1つであっても、複数個のMの中で複数個のGが実行されているので、M:Nスレッドモデルで動いていることがわかる
+<img width="1011" alt="スクリーンショット 2023-10-18 14 15 16" src="https://github.com/IzmYuta/TIL/assets/104307371/e6200ff2-ef7e-400a-a313-c79cfc8b14bc">
