@@ -58,6 +58,8 @@ func proc3(ctx context.Context) {
 - context.WithCancelを用いることでcancelCtxとcancelFuncが返ってくる
 - cancelFuncを呼ぶことでcontext内部のchannelをcloseする
 - context.Done()経由でcancelされたかどうかを確認できる
+- キャンセルされるとcontext.Err()に値が入る
+  - キャンセルされていない時はnilになる
 
 ```go
 package main
@@ -109,4 +111,54 @@ func watch(ctx context.Context) {
 	- 認証トークン
 	- ユーザーID
 	- Query Cache
--  
+- keyにempty structを使うことでメモリを節約できる
+  - stringは16byte、empty structは0byte
+- context.Valueのkeyはprivateにする
+  - context.Valueに同じkeyをsetすると上書きされてしまうため
+  - privateにすることでsetとgetを関数経由でのみ行えるようにできる
+
+```go
+// string
+ctx := context.WithValue(ctx, “key”, “value)
+ctx.Value(“key”)
+
+//empty struct
+ctx := context.WithValue(ctx, key, “value)
+ctx.Value(key)
+```
+
+### 1.5 contextの親子関係・兄弟関係
+キャンセル：
+- 親子：親から子へ伝播する。逆は伝搬ない。
+- 兄弟：伝搬しない。
+
+```go
+
+```
+
+context.Value：
+- 親子：子から親へ探索する。逆はしない。
+- 兄弟：探索しない。
+
+イメージ図：
+<img width="1470" alt="スクリーンショット 2023-10-20 0 38 46" src="https://github.com/IzmYuta/TIL/assets/104307371/bfac3ab8-b526-42b6-9c28-84808c6da110">
+```go
+	ctx := context.WithValue(context.Background(), "key", 1)
+	log.Println("-----")
+	log.Println(ctx.Value("key")) // 1
+	log.Println(ctx.Value("key2")) // nil　親から子へ探索できない
+
+	log.Println("-----")
+	ctx2 := context.WithValue(ctx, "key2", 2)
+	log.Println(ctx2.Value("key")) // 1 子から親の探索はできる
+	log.Println(ctx2.Value("key2")) // 2 
+
+	log.Println("-----")
+	ctx3 := context.WithValue(ctx2, "key3", 3)
+	log.Println(ctx3.Value("key")) // 1 孫から親への探索もできる
+	log.Println(ctx3.Value("key2")) // 2
+
+	log.Println("-----")
+	ctx4 := context.WithValue(ctx, "key4", 4)
+	log.Println(ctx4.Value("key3")) // nil 兄弟関係では探索はできない
+```
