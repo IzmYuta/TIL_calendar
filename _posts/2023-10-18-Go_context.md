@@ -14,7 +14,9 @@ excerpt: ""
 - Aは処理を止めたいがBは続けたい
   - channelを使用すると管理が煩雑になる
   - -> contextを利用する
-
+- **contextのcanselFancは必ず呼ぶこと**
+	- channelを2回以上cancelするとpanicするがcontextは制御してくれている
+ 	- なので安心して呼び出そうね
 channelとcontextの比較：
 ```go
 // channel
@@ -99,3 +101,12 @@ func watch(ctx context.Context) {
 - context.WithDeadlineを用いることでtimerCtxとcancelFuncが返ってくる
 - cancelFuncを呼ぶ、ある時刻から指定秒が過ぎることでcontext内部のchannelをcloseする
 - context.Done()経由でcancelされたかどうかを確認できる
+
+### 1.4 値の伝搬
+- contextは特定の値をkey/valueで伝播させることも可能
+	- 例：
+ 	- 分散システムでTrace IDを伝播させたい
+	- 認証トークン
+	- ユーザーID
+	- Query Cache
+-  
