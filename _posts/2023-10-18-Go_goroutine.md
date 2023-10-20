@@ -48,6 +48,9 @@ go func() {
     - Pが1つであっても、複数個のMの中で複数個のGが実行されているので、M:Nスレッドモデルで動いていることがわかる
 <img width="1011" alt="スクリーンショット 2023-10-18 14 15 16" src="https://github.com/IzmYuta/TIL/assets/104307371/e6200ff2-ef7e-400a-a313-c79cfc8b14bc">
 
+イメージ：
+<img width="1470" alt="スクリーンショット 2023-10-20 18 00 52" src="https://github.com/IzmYuta/TIL/assets/104307371/71524c96-ecc4-4488-9055-236c398e515c">
+(出典：https://speakerdeck.com/cyberagentdevelopers/ca-1day-youth-boot-camp-part-of-go)
 
 ### 1.2 Go channel
 - Go channelとは並行に実行している関数同士が特定の方の値を送受信するためのもの
@@ -184,10 +187,53 @@ select {
 - rate limitが存在すると制御しないといけない
 - gorutineの実行数を制御する:
   - bufferありのchannelを使用
-  - semaphore packageを利用する
-nosemaphore：
+  - semaphore package`golang.org/x/sync/semaphore`を利用する
+
+```go
+// semaphoreなしの実装
+func longProcess(ctx context.Context) {
+	fmt.Println("Wait...")
+	time.Sleep(1 * time.Second)
+	fmt.Println("Done")
+}
+
+func main() {
+	ctx := context.TODO()
+	go longProcess(ctx)
+	go longProcess(ctx)
+	go longProcess(ctx)
+	time.Sleep(5 * time.Second)
+}
+
+
+// semaphoreありの実装
+var s *semaphore.Weighted = semaphore.NewWeighted(1)
+func longProcess(ctx context.Context) {
+	// Acquireで取得するとcountが減る
+	// 0になるとブロックする
+	if err := s.Acquire(ctx, 1); err != nil {
+		fmt.Println(err)
+		return
+	}
+	// カウントを戻す
+	defer s.Release(1)
+	fmt.Println("Wait...")
+	time.Sleep(1 * time.Second)
+	fmt.Println("Done")
+}
+
+func main() {
+	ctx := context.TODO()
+	go longProcess(ctx)
+	go longProcess(ctx)
+	go longProcess(ctx)
+	time.Sleep(5 * time.Second)
+}
+```
+
+nosemaphore(一気にまとめて処理が行われてしまう)：
 <img width="1011" alt="AD0B74EB-2C5B-4994-9DE2-75942DE99238" src="https://github.com/IzmYuta/TIL/assets/104307371/38f853e0-d32d-461f-ab94-a771e8555ad6">
-semaphore：
+semaphore(実行数を制限して、1個ずつ処理できるようにしている)：
 <img width="1011" alt="88B04F73-57F2-4832-9AE6-CDD92A0B9921" src="https://github.com/IzmYuta/TIL/assets/104307371/c79cb59c-a013-48ab-a285-595a62c0c9e0">
 
 ### 1.7 errgroup
