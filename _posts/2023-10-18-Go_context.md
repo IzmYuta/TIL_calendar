@@ -170,6 +170,7 @@ context.Value：
 
 イメージ図：
 <img width="1470" alt="スクリーンショット 2023-10-20 0 38 46" src="https://github.com/IzmYuta/TIL/assets/104307371/bfac3ab8-b526-42b6-9c28-84808c6da110">
+(出典：https://speakerdeck.com/cyberagentdevelopers/ca-1day-youth-boot-camp-part-of-go)
 ```go
 	ctx := context.WithValue(context.Background(), "key", 1)
 	log.Println("-----")
