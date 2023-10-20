@@ -190,3 +190,16 @@ context.Value：
 	ctx4 := context.WithValue(ctx, "key4", 4)
 	log.Println(ctx4.Value("key3")) // nil 兄弟関係では探索はできない
 ```
+
+### 1.6 contextのアンチパターン
+- contextを構造体に含めてはいけない
+  - contextにセットする値はリクエストスコープに閉じる(=呼び出す時にだけ参照できる)ものにする
+  - structに含めるとリクエストスコープを超えてしまうため
+    - 起こりうる問題：
+    - トークンの漏洩
+    - 意図しない値の上書き
+  - 状態を管理したいときは、contextを**ctxという名前で第一引数**に指定して渡すこと
+
+### 1.7 アンチパターンの例外
+- net/http
+- database/sql
