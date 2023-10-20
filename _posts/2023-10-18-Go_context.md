@@ -134,6 +134,34 @@ ctx.Value(key)
 
 ```go
 
+	ctxtimeout, _ := context.WithTimeout(context.Background(), time.Second*3)
+	// timeoutが短い方が優先される
+	childctxtimeout, _ := context.WithTimeout(ctxtimeout, time.Second*2)
+	child2ctxtimeout, _ := context.WithTimeout(ctxtimeout, time.Second*4)
+	// ----  2.5秒のライン  ----
+	time.Sleep(time.Millisecond * 2500)
+	log.Println("-----")
+	log.Println(childctxtimeout.Err()) // context deadline exceeded 2.5秒経過したので、タイムアウトが2秒のchildの方はキャンセルされる
+	log.Println(ctxtimeout.Err())  // nil 親にキャンセルは伝搬しない。
+	// ----  3.5秒のライン  ----
+	time.Sleep(time.Millisecond * 1000)
+	log.Println(child2ctxtimeout.Err()) // context deadline exceeded  タイムアウトが4秒のchild2はキャンセルされないはずだが、親がタイムアウトすると子に伝搬するためキャンセルされている。
+
+	parent, cancel := context.WithCancel(context.Background())
+	child, _ := context.WithCancel(parent)
+	cancel()
+	// 親から子へはcancelが伝播する
+	log.Println("-----")
+	log.Println(parent.Err()) // context canceled
+	log.Println(child.Err()) // context canceled
+
+	parent2, _ := context.WithCancel(context.Background())
+	child2, cancel := context.WithCancel(parent)
+	cancel()
+	// 子から親へは伝播しない
+	log.Println("-----")
+	log.Println(parent2.Err()) // nil
+	log.Println(child2.Err()) // context canceled
 ```
 
 context.Value：
